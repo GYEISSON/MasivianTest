@@ -13,11 +13,12 @@ public class TestServiceImplement implements TestService{
 	private static int idRoulette;
 	private static int idUser;
 	private HashMap<Integer,Roulette> roulettes;
-	
 	private HashMap<Integer,User> users;
 	public TestServiceImplement() {
 		idRoulette=1;
+		idUser=1;
 		roulettes=new HashMap<Integer,Roulette>();
+		users= new HashMap<Integer,User>();
 	} 
 	@Override
 	public int createRoulette() {
@@ -31,7 +32,8 @@ public class TestServiceImplement implements TestService{
 	}
 	@Override
 	public void makeBet(Bet bet) {
-		roulettes.get(idRoulette).addBet(bet);
+		Roulette roulette = roulettes.get(bet.getIdRoulette());
+		roulette.addBet(bet);
 		if(!users.containsKey(bet.getUserId())) {
 			users.put(idUser, new User(idUser));
 		}
@@ -58,6 +60,7 @@ public class TestServiceImplement implements TestService{
 		for (HashMap.Entry<Integer, Roulette> roulette : roulettes.entrySet()) {
 		    rouletteList.add( roulette.getKey() + ":" + roulette.getValue().isOpen());
 		}
+
 		return rouletteList;
 	}
 }

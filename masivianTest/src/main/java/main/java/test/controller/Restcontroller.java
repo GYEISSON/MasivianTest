@@ -10,30 +10,26 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 @RestController
 @RequestMapping("/testRoulette")
 public class Restcontroller {
 	@Autowired
 	private TestServiceImplement testService;
-	@RequestMapping("/")
-	public String index() {
-		
-		return "Greetings from Spring Boot!";
-	}
 	@PostMapping("/create")
-	public ResponseEntity<Object> createRoulette() {
+	public ResponseEntity<?> createRoulette() {
         try {
-        	System.out.println("Roulette created !");
-        		
-            return new ResponseEntity<>(testService.createRoulette(),HttpStatus.CREATED);
+            int idRoulette =testService.createRoulette();
+
+            return new ResponseEntity<>(idRoulette,HttpStatus.CREATED);
         }catch (Exception e){
         	
             return  new ResponseEntity<>("The roulette didn't create", HttpStatus.FORBIDDEN);
         }
 	}
 	@PatchMapping("/open/{idRoulette}")
-	public ResponseEntity<Object> openRoulette(@PathVariable Integer idRoulette) {
+	public ResponseEntity<?> openRoulette(@PathVariable Integer idRoulette) {
         try {
         	testService.openRoulette(idRoulette);	
         	
@@ -44,10 +40,10 @@ public class Restcontroller {
         }
 	}
 	@PutMapping("/make/{bet}")
-	public ResponseEntity<?> makeBet(@PathVariable Bet bet){
+	public ResponseEntity<?> makeBet(@RequestBody Bet bet){
         try {
         	testService.makeBet(bet);
-        	
+
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         }catch (Exception e){
         	
@@ -57,8 +53,9 @@ public class Restcontroller {
 	@GetMapping("/close/{idRoulette}")
 	public ResponseEntity<?> closeBet(@PathVariable Integer idRoulette){
         try {
-        	System.out.println("Roulette closed!");
-            return new ResponseEntity<>(testService.closeBet(idRoulette),HttpStatus.ACCEPTED);
+            byte winningBeat = testService.closeBet(idRoulette);
+
+            return new ResponseEntity<>(winningBeat,HttpStatus.ACCEPTED);
         }catch (Exception e){
         		
             return  new ResponseEntity<>("The roulette didn't close", HttpStatus.NOT_FOUND);
@@ -67,8 +64,9 @@ public class Restcontroller {
 	@GetMapping("/getRoulettes")
 	public ResponseEntity<?> getRoulettes(){
         try {
-        	System.out.println("listing roulettes!");
-            return new ResponseEntity<>(testService.createdRoulettes(),HttpStatus.ACCEPTED);
+            List<Roulette> rouletes = testService.createdRoulettes();
+
+            return new ResponseEntity<>(,HttpStatus.ACCEPTED);
         }catch (Exception e){
         	
             return  new ResponseEntity<>("The roulette didn't listed", HttpStatus.NOT_FOUND);

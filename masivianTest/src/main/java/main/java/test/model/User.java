@@ -6,6 +6,10 @@ public class User {
 		balance =0;
 		this.userId= userId;
 	}
+	public User(int userId, double balance) {
+		this.balance =balance;
+		this.userId= userId;
+	}
 	public int getUserId() {
 		
 		return userId;

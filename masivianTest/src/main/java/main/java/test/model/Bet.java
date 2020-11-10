@@ -4,12 +4,15 @@ public class Bet {
 	private byte expectedNumber;
 	private char color;
 	private short value;
-
-	public Bet(int user, byte number, char color, short value) {
+	private int idRoulette;
+	public Bet() {
+	}
+	public Bet(int user, byte number, char color, short value,int idRoulette) {
 		this.userId = user;
 		this.expectedNumber = number;
 		this.color = color;
 		this.value = value;
+		this.idRoulette = idRoulette;
 	}
 	public short getValue() {
 		
@@ -36,5 +39,11 @@ public class Bet {
 	}
 	public void setColor(char color) {
 		this.color = color;
+	}
+	public int getIdRoulette() {
+		return idRoulette;
+	}
+	public void setIdRoulette(int idRoulette) {
+		this.idRoulette = idRoulette;
 	}
 }

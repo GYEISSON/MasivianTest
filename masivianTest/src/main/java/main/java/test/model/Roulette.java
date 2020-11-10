@@ -7,7 +7,8 @@ public class Roulette {
 	private ArrayList<Bet> bets;
 	public Roulette(int id) {
 		this.id =id;
-		this.open = true;
+		this.open = false;
+		bets = new ArrayList<Bet>();
 	}
 	public int getId() {
 		return id;
